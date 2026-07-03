@@ -29,6 +29,7 @@ npm install
 
 ```bash
 VITE_OMDB_API_KEY=your_key_here
+VITE_BASE_PATH=/
 ```
 
 3. Start the dev server:
@@ -38,6 +39,28 @@ npm run dev
 ```
 
 If you do not have a key yet, the app still loads with curated sample titles. You can also paste a key directly into the UI and it will be stored in local storage for later sessions.
+
+## Deployment
+
+Vercel works with the default root base path, and this repo now uses:
+
+```bash
+VITE_BASE_PATH=/
+```
+
+That is already the default. If you later deploy this same app to a GitHub Pages project site, build it with:
+
+```bash
+VITE_BASE_PATH=/movie_mulearn/
+```
+
+Production build:
+
+```bash
+npm run build
+```
+
+For Vercel, the framework can stay as `Vite` and the output directory is `dist`. Add `VITE_OMDB_API_KEY` in the Vercel project environment variables if you want live search in production instead of curated fallback only.
 
 ## Design notes
 

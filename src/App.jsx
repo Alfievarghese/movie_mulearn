@@ -1,15 +1,8 @@
-import { useEffect, useMemo, useState, useDeferredValue, startTransition } from "react";
+import { useDeferredValue, useEffect, useMemo, useState, startTransition } from "react";
 import { curatedMovies, moodOptions, surprisePool } from "./data";
 
 const OMDB_BASE_URL = "https://www.omdbapi.com/";
 const fallbackApiKey = "";
-
-const filters = [
-  { key: "genre", label: "Genre" },
-  { key: "year", label: "Year" },
-  { key: "type", label: "Format" },
-  { key: "mood", label: "Mood" },
-];
 
 const quote = {
   body: "Cinema is a matter of what's in the frame and what's out.",
@@ -82,9 +75,11 @@ function App() {
           return;
         }
 
-        setStatus(error.message === "Invalid API key!"
-          ? "OMDb rejected that API key. Paste a valid key to unlock live search."
-          : `${error.message} Falling back to the curated shelf.`);
+        setStatus(
+          error.message === "Invalid API key!"
+            ? "OMDb rejected that API key. Paste a valid key to unlock live search."
+            : `${error.message} Falling back to the curated shelf.`,
+        );
       }
     }, 350);
 
@@ -192,7 +187,7 @@ function App() {
 
         <section className="search-cluster">
           <div className="search-bar">
-            <span className="search-icon">⌕</span>
+            <span className="search-icon" aria-hidden="true">&#8981;</span>
             <input
               value={query}
               onChange={(event) => setQuery(event.target.value)}
@@ -291,7 +286,7 @@ function App() {
               <div className="movie-card-copy">
                 <h4>{movie.Title}</h4>
                 <p>{movie.Year}</p>
-                <span>{movie.imdbRating ? `★ ${movie.imdbRating}` : movie.mood}</span>
+                <span>{movie.imdbRating ? `IMDb ${movie.imdbRating}` : movie.mood}</span>
               </div>
             </article>
           ))}
@@ -326,10 +321,10 @@ function App() {
               <div>
                 <h4>{movie.Title}</h4>
                 <p>{movie.Year}</p>
-                <span>{movie.imdbRating ? `★ ${movie.imdbRating}` : movie.mood}</span>
+                <span>{movie.imdbRating ? `IMDb ${movie.imdbRating}` : movie.mood}</span>
               </div>
               <button onClick={() => toggleWatchlist(movie)} className="mini-action">
-                •••
+                ...
               </button>
             </article>
           ))}
